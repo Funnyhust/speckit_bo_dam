@@ -184,8 +184,10 @@ void wifi_tx_task(void *pvParameters) {
         }
       }
 
-      // CRITICAL: Add delay to let ESP-NOW queue drain
-      vTaskDelay(pdMS_TO_TICKS(10));
+      // Delay to prevent ESP-NOW queue overflow
+      // Theoretical: 240 bytes / 32000 bytes/s = 7.5ms
+      // Practical: ESP-NOW needs ~15ms to process each packet reliably
+      vTaskDelay(pdMS_TO_TICKS(6));
     }
   }
 }

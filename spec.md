@@ -72,3 +72,9 @@ This feature implements a Walkie-Talkie system using ESP32-WROOM-32 via ESP-NOW 
 - **Assump.01:** Devices are within effective Wi-Fi range.
 - **Const.01:** ESP-NOW payload is limited to 250 bytes, requiring efficient packetization.
 - **Const.02:** ESP32 WROOM-32 single-core or dual-core usage must respect FreeRTOS task pinning for Wi-Fi stability.
+
+## 7. Phase 4 – PTT & Buffer Logic
+
+- Khi không nhấn nút PTT, RX StreamBuffer phải rỗng.
+- Khi thiết bị A nhấn PTT, thiết bị B chỉ bắt đầu phát sau khi RX buffer đã nhận đủ 3 packet (≈ 720 B).
+- Tăng số DMA buffer cho speaker lên 8.

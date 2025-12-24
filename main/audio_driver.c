@@ -15,7 +15,7 @@ static i2s_chan_handle_t tx_handle = NULL;
 static i2s_chan_handle_t rx_handle = NULL;
 
 // Audio configuration
-#define SAMPLE_RATE (16000)
+#define SAMPLE_RATE (8000)
 #define SAMPLE_BITS (16)
 #define I2S_DMA_BUF_COUNT (4)
 #define I2S_DMA_BUF_LEN (256) // 256 samples = 512 bytes
