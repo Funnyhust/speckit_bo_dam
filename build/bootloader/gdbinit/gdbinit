@@ -1,2 +1,2 @@
-source D:/Duong/Project1_Engineer/Doppler/build/bootloader/gdbinit/symbols
-source D:/Duong/Project1_Engineer/Doppler/build/bootloader/gdbinit/connect
+source /home/iot/Lumi/Speckit/speckit_bo_dam/build/bootloader/gdbinit/symbols
+source /home/iot/Lumi/Speckit/speckit_bo_dam/build/bootloader/gdbinit/connect

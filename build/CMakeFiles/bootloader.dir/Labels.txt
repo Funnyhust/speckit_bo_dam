@@ -1,13 +1,13 @@
 # Target labels
  bootloader
 # Source files and their labels
-D:/Duong/Project1_Engineer/Doppler/build/CMakeFiles/bootloader
-D:/Duong/Project1_Engineer/Doppler/build/CMakeFiles/bootloader.rule
-D:/Duong/Project1_Engineer/Doppler/build/CMakeFiles/bootloader-complete.rule
-D:/Duong/Project1_Engineer/Doppler/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
-D:/Duong/Project1_Engineer/Doppler/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
-D:/Duong/Project1_Engineer/Doppler/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
-D:/Duong/Project1_Engineer/Doppler/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
-D:/Duong/Project1_Engineer/Doppler/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
-D:/Duong/Project1_Engineer/Doppler/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
-D:/Duong/Project1_Engineer/Doppler/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
+/home/iot/Lumi/Speckit/speckit_bo_dam/build/CMakeFiles/bootloader
+/home/iot/Lumi/Speckit/speckit_bo_dam/build/CMakeFiles/bootloader.rule
+/home/iot/Lumi/Speckit/speckit_bo_dam/build/CMakeFiles/bootloader-complete.rule
+/home/iot/Lumi/Speckit/speckit_bo_dam/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+/home/iot/Lumi/Speckit/speckit_bo_dam/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/home/iot/Lumi/Speckit/speckit_bo_dam/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/home/iot/Lumi/Speckit/speckit_bo_dam/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/home/iot/Lumi/Speckit/speckit_bo_dam/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/home/iot/Lumi/Speckit/speckit_bo_dam/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/home/iot/Lumi/Speckit/speckit_bo_dam/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule

@@ -1,2 +1,2 @@
-source D:/Duong/Project1_Engineer/Doppler/build/gdbinit/symbols
-source D:/Duong/Project1_Engineer/Doppler/build/gdbinit/connect
+source /home/iot/Lumi/Speckit/speckit_bo_dam/build/gdbinit/symbols
+source /home/iot/Lumi/Speckit/speckit_bo_dam/build/gdbinit/connect
