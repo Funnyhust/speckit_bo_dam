@@ -6,7 +6,7 @@
 // Audio Settings
 #define SAMPLE_Rate (8000)
 #define SAMPLE_BITS (16)
-#define I2S_DMA_BUF_COUNT (4)
+#define I2S_DMA_BUF_COUNT (8) // Phase 4: Increased from 4 to 8 for speaker
 #define I2S_DMA_BUF_LEN (120) // Samples per buffer (Mono) -> 240 Bytes
 
 // ESP-NOW Protocol defined in subsequent tasks

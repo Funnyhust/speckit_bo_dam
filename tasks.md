@@ -25,15 +25,15 @@
 
 ## 🛠️ Phase 4: PTT Logic & Tối Ưu Hóa
 
-- **T015**: Implement State Machine (RX_IDLE ↔ TX_ACTIVE) sử dụng PTT Button trong `main/main.c`
-- **T016**: Implement Mute Logic: Disable I2S Amp khi TX để tránh feedback trong `main/audio_driver.c`
-- **T017**: Tối ưu Latency: Tune RingBuffer size vs Dropouts
-- **T018**: Kiểm tra Full Duplex (Half-Duplex logic): Test conversation giữa 2 thiết bị
-- **T019**: Khi không nhấn nút PTT, RX StreamBuffer phải rỗng (reset buffer on idle).
-- **T020**: Khi thiết bị A nhấn PTT, thiết bị B chỉ bắt đầu phát sau khi RX buffer đã nhận đủ 3 packet (≈720 B).
-- **T021**: Tăng số DMA buffer cho speaker lên 8 (update `I2S_DMA_BUF_COUNT` in `audio_driver.c`).
-- **T022**: Update configuration constants in `app_config.h` for new DMA count.
-- **T023**: Add documentation updates in `README.md` và `spec.md` cho PTT flow và buffer logic.
+- [ ] **T015**: Implement State Machine (RX_IDLE ↔ TX_ACTIVE) sử dụng PTT Button trong `main/main.c`
+- [ ] **T016**: Implement Mute Logic: Disable I2S Amp khi TX để tránh feedback trong `main/audio_driver.c`
+- [ ] **T017**: Tối ưu Latency: Tune RingBuffer size vs Dropouts
+- [ ] **T018**: Kiểm tra Full Duplex (Half-Duplex logic): Test conversation giữa 2 thiết bị
+- [x] **T019**: Khi không nhấn nút PTT, RX StreamBuffer phải rỗng (reset buffer on idle).
+- [x] **T020**: Khi thiết bị A nhấn PTT, thiết bị B chỉ bắt đầu phát sau khi RX buffer đã nhận đủ 3 packet (≈720 B).
+- [x] **T021**: Tăng số DMA buffer cho speaker lên 8 (update `I2S_DMA_BUF_COUNT` in `audio_driver.c`).
+- [x] **T022**: Update configuration constants in `app_config.h` for new DMA count.
+- [ ] **T023**: Add documentation updates in `README.md` và `spec.md` cho PTT flow và buffer logic.
 
 ---
 *All tasks are atomic, can be implemented independently, and follow the project's coding standards.*

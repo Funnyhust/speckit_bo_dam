@@ -16,6 +16,11 @@ static const char *TAG = "MAIN";
 static StreamBufferHandle_t tx_audio_buffer = NULL; // Mic → WiFi
 static StreamBufferHandle_t rx_audio_buffer = NULL; // WiFi → Speaker
 
+// Phase 4: PTT state and pre-buffering
+static volatile bool ptt_pressed = false;
+static volatile uint8_t rx_packet_count = 0; // Count packets received
+#define MIN_PACKETS_BEFORE_PLAY 10           // Wait for 3 packets (~720 bytes)
+
 static void gpio_init(void) {
   // Configure LED
   gpio_reset_pin(GPIO_STATUS_LED);
@@ -52,15 +57,21 @@ static void audio_capture_task(void *pvParameters) {
   ESP_LOGI(TAG, "Starting audio capture (pushing to TX buffer)...");
 
   while (1) {
-    // Read from Microphone
-    esp_err_t ret = audio_driver_read(buffer, buffer_size, &bytes_read);
+    // Phase 4: Only capture when PTT is pressed
+    if (ptt_pressed) {
+      // Read from Microphone
+      esp_err_t ret = audio_driver_read(buffer, buffer_size, &bytes_read);
 
-    if (ret == ESP_OK && bytes_read > 0) {
-      // Push to TX buffer (non-blocking)
-      xStreamBufferSend(tx_audio_buffer, buffer, bytes_read, 0);
+      if (ret == ESP_OK && bytes_read > 0) {
+        // Push to TX buffer (non-blocking)
+        xStreamBufferSend(tx_audio_buffer, buffer, bytes_read, 0);
+      } else {
+        ESP_LOGW(TAG, "Read failed or no data");
+        vTaskDelay(pdMS_TO_TICKS(10));
+      }
     } else {
-      ESP_LOGW(TAG, "Read failed or no data");
-      vTaskDelay(pdMS_TO_TICKS(10));
+      // PTT not pressed, just wait
+      vTaskDelay(pdMS_TO_TICKS(50));
     }
   }
 }
@@ -78,8 +89,15 @@ static void audio_playback_task(void *pvParameters) {
         xStreamBufferReceive(rx_audio_buffer, buffer, 240, portMAX_DELAY);
 
     if (received == 240) {
-      // Write to Speaker
-      audio_driver_write(buffer, 240, &bytes_written);
+      // Phase 4: Only play after receiving at least 3 packets
+      if (rx_packet_count >= MIN_PACKETS_BEFORE_PLAY) {
+        // Write to Speaker
+        audio_driver_write(buffer, 240, &bytes_written);
+      }
+      // Increment packet count (saturate at MIN_PACKETS_BEFORE_PLAY + 1)
+      if (rx_packet_count < MIN_PACKETS_BEFORE_PLAY + 1) {
+        rx_packet_count++;
+      }
     }
   }
 }
@@ -122,15 +140,35 @@ void app_main(void) {
   xTaskCreate(wifi_tx_task, "wifi_tx", 4096, NULL, 5, NULL);
 
   // Main loop: Monitor PTT button and control LED
+  bool last_ptt_state = false;
+
   while (1) {
     int ptt_state = gpio_get_level(GPIO_PTT_BUTTON);
+    bool ptt_active = (ptt_state == PTT_ACTIVE_LEVEL);
 
-    if (ptt_state == PTT_ACTIVE_LEVEL) {
-      gpio_set_level(GPIO_STATUS_LED, LED_ACTIVE_LEVEL);
-    } else {
-      gpio_set_level(GPIO_STATUS_LED, !LED_ACTIVE_LEVEL);
+    // Phase 4: PTT state change detection
+    if (ptt_active != last_ptt_state) {
+      if (ptt_active) {
+        // PTT pressed: Start transmission
+        ESP_LOGI(TAG, "PTT PRESSED - TX Mode");
+        ptt_pressed = true;
+        gpio_set_level(GPIO_STATUS_LED, LED_ACTIVE_LEVEL);
+
+        // Reset RX buffer and packet count (prepare for next reception)
+        xStreamBufferReset(rx_audio_buffer);
+        rx_packet_count = 0;
+      } else {
+        // PTT released: Return to RX mode
+        ESP_LOGI(TAG, "PTT RELEASED - RX Mode");
+        ptt_pressed = false;
+        gpio_set_level(GPIO_STATUS_LED, !LED_ACTIVE_LEVEL);
+
+        // Clear TX buffer (stop any pending transmission)
+        xStreamBufferReset(tx_audio_buffer);
+      }
+      last_ptt_state = ptt_active;
     }
 
-    vTaskDelay(pdMS_TO_TICKS(100));
+    vTaskDelay(pdMS_TO_TICKS(50)); // Check every 50ms
   }
 }

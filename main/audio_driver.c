@@ -17,8 +17,8 @@ static i2s_chan_handle_t rx_handle = NULL;
 // Audio configuration
 #define SAMPLE_RATE (8000)
 #define SAMPLE_BITS (16)
-#define I2S_DMA_BUF_COUNT (4)
-#define I2S_DMA_BUF_LEN (256) // 256 samples = 512 bytes
+#define I2S_DMA_BUF_COUNT (16) // Phase 4: Increased from 4 to 8 for speaker
+#define I2S_DMA_BUF_LEN (256)  // 256 samples = 512 bytes
 
 esp_err_t audio_driver_init(void) {
   ESP_LOGI(TAG, "Initializing I2S Driver (16kHz, 16-bit, Mono)...");
