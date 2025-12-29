@@ -1,0 +1,14 @@
+var searchData=
+[
+  ['✅_0',['✅',['../md_PHASE__GUIDE.html#autotoc_md60',1,'&lt;strong&gt;Hiện tại&lt;/strong&gt;: Phase 2 hoàn thành ✅'],['../md_PHASE__GUIDE.html#autotoc_md13',1,'&lt;strong&gt;T001: Initialize Project Skeleton&lt;/strong&gt; ✅'],['../md_PHASE__GUIDE.html#autotoc_md14',1,'&lt;strong&gt;T002: GPIO and LED/Button Drivers&lt;/strong&gt; ✅'],['../md_PHASE__GUIDE.html#autotoc_md15',1,'&lt;strong&gt;T003: I2S Driver&lt;/strong&gt; ✅'],['../md_PHASE__GUIDE.html#autotoc_md16',1,'&lt;strong&gt;T004: Loopback Logic&lt;/strong&gt; ✅'],['../md_PHASE__GUIDE.html#autotoc_md17',1,'&lt;strong&gt;T005: Verify Audio&lt;/strong&gt; ✅'],['../md_PHASE__GUIDE.html#autotoc_md24',1,'&lt;strong&gt;T006: Initialize WiFi &amp; ESP-NOW&lt;/strong&gt; ✅'],['../md_PHASE__GUIDE.html#autotoc_md25',1,'&lt;strong&gt;T007: Define audio_packet_t&lt;/strong&gt; ✅'],['../md_PHASE__GUIDE.html#autotoc_md26',1,'&lt;strong&gt;T008: TX Task - Send Dummy Packets&lt;/strong&gt; ✅'],['../md_PHASE__GUIDE.html#autotoc_md27',1,'&lt;strong&gt;T009: RX Callback - Receive &amp; Log&lt;/strong&gt; ✅']]],
+  ['✅_20checklist_20hoàn_20thành_20phase_201_20strong_1',['&lt;strong&gt;✅ Checklist Hoàn Thành Phase 1&lt;/strong&gt;',['../md_TASKS__VI.html#autotoc_md138',1,'']]],
+  ['✅_20checklist_20hoàn_20thành_20phase_202_20strong_2',['&lt;strong&gt;✅ Checklist Hoàn Thành Phase 2&lt;/strong&gt;',['../md_TASKS__VI.html#autotoc_md174',1,'']]],
+  ['✅_20checklist_20hoàn_20thành_20phase_203_20strong_3',['&lt;strong&gt;✅ Checklist Hoàn Thành Phase 3&lt;/strong&gt;',['../md_TASKS__VI.html#autotoc_md204',1,'']]],
+  ['✅_20checklist_20hoàn_20thành_20phase_204_20strong_4',['&lt;strong&gt;✅ Checklist Hoàn Thành Phase 4&lt;/strong&gt;',['../md_TASKS__VI.html#autotoc_md234',1,'']]],
+  ['✅_20checklist_20trước_20khi_20bật_20nguồn_5',['✅ Checklist Trước Khi Bật Nguồn',['../md_WIRING__GUIDE.html#autotoc_md290',1,'']]],
+  ['✅_20phase_201_3a_20foundation_20audio_20loopback_20test_6',['✅ Phase 1: Foundation &amp; Audio Loopback Test',['../md_PHASE__GUIDE.html#autotoc_md9',1,'']]],
+  ['✅_20phase_201_3a_20nền_20tảng_20kiểm_20tra_20audio_20loopback_7',['✅ phase 1: nền tảng kiểm tra audio loopback',['../md_TASKS__VI.html#autotoc_md112',1,'✅ Phase 1: Nền Tảng &amp; Kiểm Tra Audio Loopback'],['../md_tasks.html#autotoc_md104',1,'✅ Phase 1: Nền Tảng &amp; Kiểm Tra Audio Loopback']]],
+  ['✅_20phase_202_3a_20esp_20now_20communication_8',['✅ Phase 2: ESP-NOW Communication',['../md_PHASE__GUIDE.html#autotoc_md20',1,'']]],
+  ['✅_20phase_202_3a_20giao_20tiếp_20esp_20now_9',['✅ phase 2: giao tiếp esp now',['../md_TASKS__VI.html#autotoc_md140',1,'✅ Phase 2: Giao Tiếp ESP-NOW'],['../md_tasks.html#autotoc_md105',1,'✅ Phase 2: Giao Tiếp ESP-NOW']]],
+  ['✅_20phase_203_3a_20tích_20hợp_20audio_20transport_10',['✅ Phase 3: Tích Hợp Audio Transport',['../md_tasks.html#autotoc_md106',1,'']]]
+];

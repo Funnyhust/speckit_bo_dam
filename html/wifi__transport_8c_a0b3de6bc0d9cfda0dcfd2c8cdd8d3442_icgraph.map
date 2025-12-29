@@ -1,0 +1,7 @@
+<map id="wifi_transport_get_seq_num" name="wifi_transport_get_seq_num">
+<area shape="rect" id="Node000001" title="Get current sequence number for TX." alt="" coords="288,5,427,45"/>
+<area shape="rect" id="Node000002" href="$wifi__transport_8c.html#ab7c95ccd55751eed5d8498e6daca7219" title="WiFi TX task &#45; Pop audio from buffer and send via ESP&#45;NOW (Phase 3)" alt="" coords="140,13,240,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="274,28,240,28,240,23,274,23"/>
+<area shape="rect" id="Node000003" href="$main_8c.html#a630544a7f0a2cc40d8a7fefab7e2fe70" title=" " alt="" coords="5,13,92,38"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="126,28,92,28,92,23,126,23"/>
+</map>

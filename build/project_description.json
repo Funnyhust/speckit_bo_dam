@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "doppler_walkie_talkie",
-    "project_version":    "adb2201-dirty",
+    "project_version":    "ea9327c-dirty",
     "project_path":       "/home/iot/Lumi/Speckit/speckit_bo_dam",
     "idf_path":           "/home/iot/Desktop/esp-idf",
     "build_dir":          "/home/iot/Lumi/Speckit/speckit_bo_dam/build",

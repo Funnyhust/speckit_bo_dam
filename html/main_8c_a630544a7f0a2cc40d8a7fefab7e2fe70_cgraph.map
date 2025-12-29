@@ -1,0 +1,33 @@
+<map id="app_main" name="app_main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,203,92,228"/>
+<area shape="rect" id="Node000002" href="$main_8c.html#aa73ff00b8493efd0a1bd82b637831301" title=" " alt="" coords="145,55,294,80"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="54,201,85,147,109,116,138,89,147,84,150,88,142,93,113,120,89,150,58,204"/>
+<area shape="rect" id="Node000005" href="$main_8c.html#a2f7a63782839401e520284bd5c36266b" title=" " alt="" coords="140,104,299,129"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="60,200,94,170,139,138,153,132,155,137,141,143,97,174,64,204"/>
+<area shape="rect" id="Node000008" href="$main_8c.html#a599b41df634258a4002f46cfd8ce40bd" title=" " alt="" coords="180,153,259,179"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="92,200,165,179,167,184,93,205"/>
+<area shape="rect" id="Node000009" href="$wifi__transport_8c.html#ab593305ae3f76fdd752dcaaba1edccb8" title="Initialize WiFi in Station Mode and ESP&#45;NOW." alt="" coords="150,203,289,228"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="92,213,136,213,136,218,92,218"/>
+<area shape="rect" id="Node000012" href="$wifi__transport_8c.html#a04a7b0b1e9c8ecbbe2c796f12fb0bc11" title="Set RX audio buffer handle (Phase 3)" alt="" coords="150,253,289,293"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="88,226,147,246,145,251,86,231"/>
+<area shape="rect" id="Node000013" href="$wifi__transport_8c.html#a7bfd60313d207abb3479a85877629279" title="Set TX audio buffer handle (Phase 3)" alt="" coords="150,317,289,357"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="62,227,95,264,142,303,150,308,148,312,138,307,92,267,58,230"/>
+<area shape="rect" id="Node000014" href="$wifi__transport_8c.html#ab7c95ccd55751eed5d8498e6daca7219" title="WiFi TX task &#45; Pop audio from buffer and send via ESP&#45;NOW (Phase 3)" alt="" coords="169,381,269,407"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="56,227,85,294,110,333,142,367,158,377,155,381,138,371,105,336,80,296,52,229"/>
+<area shape="rect" id="Node000003" href="$audio__driver_8c.html#a80870b1d94a02204bac98b9c69def882" title="Initialize I2S audio driver." alt="" coords="356,5,487,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="271,52,355,31,356,37,273,57"/>
+<area shape="rect" id="Node000004" href="$audio__driver_8c.html#a3578eabd2ada6381a802454a296698a1" title="Read audio data from microphone." alt="" coords="352,55,491,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="294,65,338,65,338,70,294,70"/>
+<area shape="rect" id="Node000006" href="$audio__driver_8c.html#a0fd474ad8e1841679c8a63d01b36ae4b" title="Write audio data to amplifier." alt="" coords="350,104,493,129"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="299,114,336,114,336,119,299,119"/>
+<area shape="rect" id="Node000007" href="$audio__driver_8c.html#a649b3ddecda2bcdbb5cfa152867d350b" title="Apply software gain to audio buffer." alt="" coords="544,104,637,129"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="493,114,531,114,531,119,493,119"/>
+<area shape="rect" id="Node000010" href="$wifi__transport_8c.html#a4e5c5ca5f624459510bc68089a7d8934" title=" " alt="" coords="353,179,489,204"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="288,204,340,198,340,204,289,210"/>
+<area shape="rect" id="Node000011" href="$wifi__transport_8c.html#a364a1cff786d80cf33dcfb736fc64230" title=" " alt="" coords="352,228,491,253"/>
+<area shape="poly" id="edge10_Node000009_Node000011" title=" " alt="" coords="289,221,339,228,338,233,288,227"/>
+<area shape="rect" id="Node000015" href="$wifi__transport_8c.html#a0b3de6bc0d9cfda0dcfd2c8cdd8d3442" title="Get current sequence number for TX." alt="" coords="352,345,491,385"/>
+<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="269,384,338,374,339,379,270,389"/>
+<area shape="rect" id="Node000016" href="$wifi__transport_8c.html#a5e3ae912fff502974839e28443f76752" title="Send audio packet via ESP&#45;NOW broadcast." alt="" coords="347,409,496,435"/>
+<area shape="poly" id="edge15_Node000014_Node000016" title=" " alt="" coords="270,398,333,407,333,412,269,403"/>
+</map>

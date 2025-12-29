@@ -17,7 +17,7 @@
 // Để BẬT software gain: Đổi 0 thành 1
 // Để TĂNG âm lượng: Tăng giá trị SOFTWARE_GAIN_DB
 #define SOFTWARE_GAIN_ENABLE 1 // 0 = TẮT, 1 = BẬT
-#define SOFTWARE_GAIN_DB 12.0f // 0=không đổi, 6=2x, 12=4x, 18=8x
+#define SOFTWARE_GAIN_DB 6.0f  // 0=không đổi, 6=2x, 12=4x, 18=8x
 
 // Lưu ý:
 // - Gain quá cao → méo tiếng
