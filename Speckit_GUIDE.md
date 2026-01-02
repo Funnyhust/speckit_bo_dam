@@ -86,7 +86,116 @@ AI sẽ tự động đọc `tasks.md`, viết code, và yêu cầu bạn xác n
 
 ## 4. Case Study Mẫu: ESP32 Walkie-Talkie (Chi tiết)
 
-Dưới đây là toàn bộ prompt mẫu đã sử dụng để build thành công firmware bộ đàm ESP32.
+### 💡 Ý Tưởng
+
+Thiết kế một bộ đàm không dây sử dụng ESP32 và ESP-NOW để hai người có thể nói chuyện với nhau giống như bộ đàm cầm tay truyền thống. 
+
+**Cách hoạt động đơn giản:**
+- Nhấn giữ nút → Nói vào micro → Giọng nói được truyền qua sóng Wi-Fi đến bộ đàm bên kia → Phát ra loa
+- Thả nút → Nghe người kia nói
+
+**Tại sao chọn ESP-NOW?**
+- Truyền trực tiếp giữa 2 thiết bị, không cần router Wi-Fi
+- Rất nhanh (độ trễ thấp), phù hợp cho giao tiếp giọng nói thời gian thực
+- Đơn giản, dễ lập trình
+
+**Ứng dụng thực tế:**
+- Liên lạc trong nhà xưởng, công trường
+- Bộ đàm cho trẻ em chơi
+- Hệ thống intercom tự làm
+
+---
+
+### 🎯 Bài Toán Kỹ Thuật
+
+**Yêu cầu:** Xây dựng firmware cho bộ đàm không dây sử dụng ESP32, cho phép 2 thiết bị giao tiếp giọng nói với nhau trong phạm vi Wi-Fi.
+
+**Thách thức kỹ thuật:**
+- ⚡ **Độ trễ thấp:** Phải đạt < 100ms end-to-end để đảm bảo trải nghiệm tự nhiên
+- 🔊 **Chất lượng âm thanh:** Giọng nói rõ ràng, không bị giật, không bị hú (feedback)
+- 🎛️ **Giao diện đơn giản:** Chỉ cần 1 nút PTT (Push-to-Talk) để điều khiển
+- 📡 **Không cần router:** Sử dụng ESP-NOW để truyền trực tiếp giữa 2 thiết bị
+
+**Ràng buộc:**
+- Hardware: ESP32-WROOM-32, INMP441 (Mic), MAX98357A (Amp)
+- Giới hạn gói tin ESP-NOW: 250 bytes
+- Phải sử dụng DMA để tránh mất mẫu audio
+
+---
+
+### Giai đoạn 0: Lên Ý Tưởng (Brainstorming với Gemini)
+
+Trước khi bắt đầu viết code, cần có một ý tưởng rõ ràng và các prompt chuẩn cho SpecKit. Giai đoạn này sử dụng Gemini để brainstorm và hoàn thiện ý tưởng.
+
+**Bước 1: Nghiên cứu SpecKit**
+
+Import link GitHub SpecKit vào Gemini để AI hiểu rõ quy trình:
+
+```
+Hãy phân tích repository này: https://github.com/github/spec-kit
+
+Tôi muốn hiểu:
+1. SpecKit hoạt động như thế nào?
+2. Các file cần tạo là gì (constitution, spec, plan, tasks)?
+3. Quy trình sử dụng SpecKit với AI Assistant?
+4. Cách viết prompt hiệu quả cho từng giai đoạn?
+
+Hãy tóm tắt ngắn gọn để tôi có thể áp dụng ngay.
+```
+
+**Bước 2: Đề xuất ý tưởng ban đầu**
+
+```
+Tôi đang lên ý tưởng thực hiện một bộ đàm sử dụng ESP32 và ESP-NOW, 
+mic INMP441 và module MAX98357A. Hãy giúp tôi lên ý tưởng thực hiện nó với SpecKit.
+
+Yêu cầu:
+- Độ trễ thấp (< 100ms)
+- Không cần router Wi-Fi
+- Giao diện đơn giản (1 nút PTT)
+- Chất lượng âm thanh tốt
+```
+
+**Bước 3: Trao đổi và hoàn thiện**
+
+Thảo luận với Gemini về các khía cạnh:
+- ✅ **Tech Stack:** ESP-IDF hay Arduino? → Chọn ESP-IDF vì hiệu năng cao
+- ✅ **Audio Pipeline:** DMA hay Polling? → Chọn DMA để tránh mất mẫu
+- ✅ **Protocol:** ESP-NOW hay MQTT? → Chọn ESP-NOW vì độ trễ thấp
+- ✅ **Buffer Strategy:** Kích thước bao nhiêu? → Tính toán dựa trên sample rate
+- ✅ **Pin Mapping:** GPIO nào cho I2S? → Tham khảo datasheet ESP32
+
+**Bước 4: Yêu cầu Gemini tạo prompts cho SpecKit**
+
+```
+Dựa trên ý tưởng đã thống nhất, hãy tạo cho tôi các prompt chuẩn 
+để sử dụng với SpecKit theo thứ tự:
+
+1. Prompt cho /constitution (Hiến pháp dự án)
+2. Prompt cho /specify (Đặc tả kỹ thuật)
+3. Prompt cho /plan (Kế hoạch triển khai)
+4. Prompt cho /tasks (Danh sách nhiệm vụ)
+
+Mỗi prompt cần:
+- Rõ ràng, chi tiết
+- Bao gồm tất cả thông tin kỹ thuật đã thống nhất
+- Dễ copy-paste để sử dụng ngay
+```
+
+**Output Result:**
+
+Gemini đã tạo ra bộ 4 prompts chuẩn (như các giai đoạn 1-4 bên dưới), bao gồm:
+- ✅ Tech Stack rõ ràng (ESP32, ESP-IDF, I2S hardware)
+- ✅ Engineering Standards cụ thể (DMA mandatory, FreeRTOS, GPIO management)
+- ✅ Pin mapping chi tiết
+- ✅ Audio configuration (16kHz, 16-bit, Mono)
+- ✅ Kiến trúc hệ thống với sơ đồ luồng dữ liệu
+- ✅ Packet structure tối ưu (244 bytes)
+- ✅ Task breakdown theo 4 phases
+
+> **💡 Tip:** Giai đoạn 0 này rất quan trọng! Nó giúp bạn tránh được việc phải sửa đổi nhiều lần sau này vì ý tưởng chưa rõ ràng. Hãy dành thời gian brainstorm kỹ với AI trước khi bắt đầu code.
+
+---
 
 ### Giai đoạn 1: Thiết lập Hiến pháp (`/constitution`)
 
@@ -111,6 +220,17 @@ Chúng ta sẽ bắt đầu dự án firmware: ESP32 ESP-NOW Walkie-Talkie. Tôi
 
 Hãy xác nhận bạn đã hiểu Hiến pháp này.
 ```
+
+**Output Result:**
+
+AI đã tạo file [`.specify/memory/constitution.md`](specs_vi/constitution.md) với nội dung:
+- ✅ Định nghĩa rõ ràng Tech Stack (ESP32, ESP-IDF, I2S hardware)
+- ✅ Quy tắc bắt buộc về Audio Pipeline (DMA mandatory)
+- ✅ Concurrency model (FreeRTOS tasks)
+- ✅ Memory management rules (no malloc in loops)
+- ✅ Code review checklist
+
+---
 
 ### Giai đoạn 2: Đặc tả kỹ thuật (`/specify`)
 
@@ -140,6 +260,17 @@ Dựa trên Hiến pháp đã duyệt, hãy viết Đặc tả kỹ thuật (Spe
    - Khi nhả nút PTT: Quay lại chế độ RX ngay lập tức
 ```
 
+**Output Result:**
+
+AI đã tạo file [`specs/spec.md`](specs/spec.md) với nội dung:
+- ✅ Pin mapping chi tiết cho I2S và GPIO
+- ✅ Functional Requirements (FR.HW.01-04, FR.AUDIO.01-04, FR.RX.01-04, FR.TX.01-07)
+- ✅ Non-Functional Requirements (Latency < 100ms, Stability, Quality)
+- ✅ User Scenarios (Successful Transmission, Receive-Only Operation)
+- ✅ Success Criteria và Assumptions
+
+---
+
 ### Giai đoạn 3: Lập kế hoạch (`/plan`)
 
 **Input Prompt:**
@@ -158,6 +289,18 @@ Hãy lập Kế hoạch triển khai (Technical Plan) chi tiết.
    - Tính toán kích thước Buffer DMA và Ring Buffer cần thiết để đảm bảo độ trễ thấp nhưng không bị đứt quãng âm thanh
 ```
 
+**Output Result:**
+
+AI đã tạo file [`specs/plan.md`](specs/plan.md) với nội dung:
+- ✅ Sơ đồ Data Flow (Mermaid diagram) từ Mic → DMA → Task → ESP-NOW
+- ✅ Packet Structure: 244 bytes (2B magic + 2B seq_num + 240B payload)
+- ✅ Memory Strategy: DMA buffer 240 bytes x 4, Ring buffer 4KB
+- ✅ Latency Budget: Tổng < 50ms (trong target 100ms)
+- ✅ File Structure: Tách module `audio_driver`, `wifi_transport`, `board_pinout`
+- ✅ Implementation Phases: 4 giai đoạn từ Foundation → Loopback → Wireless → Integration
+
+---
+
 ### Giai đoạn 4: Chia task (`/tasks`)
 
 **Input Prompt:**
@@ -171,13 +314,35 @@ Hãy chia dự án thành danh sách các Nhiệm vụ (Tasks checklist) để t
 - Task 4: PTT Logic & Optimization. Thêm nút bấm, LED và tinh chỉnh Ring Buffer để mượt tiếng
 ```
 
+**Output Result:**
+
+AI đã tạo file [`specs/tasks.md`](specs/tasks.md) với nội dung:
+- ✅ Phase 1: 5 tasks (T001-T005) - Foundation & Audio Loopback
+- ✅ Phase 2: 5 tasks (T006-T010) - ESP-NOW Communication
+- ✅ Phase 3: 4 tasks (T011-T014) - Audio Transport Integration
+- ✅ Phase 4: 9 tasks (T015-T023) - PTT Logic & Optimization
+- ✅ Mỗi task có mô tả chi tiết, file cần sửa, và phương pháp verify
+
+---
+
 ### Giai đoạn 5: Thực thi (`/implement`)
 
 Sau khi có file `tasks.md`, lần lượt ra lệnh: `/implement Task 1`, `/implement Task 2`...
 
-**Kết quả:**
-- Các phase tiến hành mượt mà, lỗi biên dịch được fix nhanh
-- Thiết bị hoạt động đúng spec: Nhấn PTT là nói, thả ra là nghe, độ trễ thấp
+**Output Result:**
+
+AI đã tạo các file source code:
+- ✅ [`main/main.c`](main/main.c) - Entry point, task creation, state machine
+- ✅ [`main/board_pinout.h`](main/board_pinout.h) - GPIO definitions
+- ✅ [`main/app_config.h`](main/app_config.h) - Audio/WiFi configuration
+- ✅ [`main/audio_driver.c`](main/audio_driver.c) - I2S driver implementation
+- ✅ [`main/wifi_transport.c`](main/wifi_transport.c) - ESP-NOW implementation
+
+**Kết quả thực tế:**
+- ✅ Phase 1-2 hoàn thành 100%: Audio loopback hoạt động, ESP-NOW gửi/nhận thành công
+- ✅ Phase 4 hoàn thành 50%: Đã tăng DMA buffer lên 8, thêm logic buffer 3 packets
+- ⏳ Phase 3 đang triển khai: RingBuffer và PTT State Machine
+- 🎯 Thiết bị đã test thành công: Độ trễ ~60ms, âm thanh rõ ràng
 
 ---
 
