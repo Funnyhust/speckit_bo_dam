@@ -14,7 +14,7 @@ Tài liệu hướng dẫn quy trình sử dụng Speckit để chuẩn hóa cá
 ---
 
 ## 1. Giới thiệu chung
-[cite_start]**Speckit** là một công cụ và phương pháp luận giúp lập trình viên làm việc với AI một cách hiệu quả, có quy trình và quy tắc chung[cite: 3].
+**Speckit** là một công cụ và phương pháp luận giúp lập trình viên làm việc với AI một cách hiệu quả, có quy trình và quy tắc chung.
 
 ### Vấn đề giải quyết:
 Bình thường, khi hỏi AI rời rạc, code sinh ra thường:
@@ -23,26 +23,26 @@ Bình thường, khi hỏi AI rời rạc, code sinh ra thường:
 * Mất ngữ cảnh khi đoạn chat quá dài.
 
 ### Giải pháp:
-[cite_start]Speckit yêu cầu tạo ra các file ngữ cảnh ("Bộ não dự án") trước khi code[cite: 4]. Mỗi khi AI thực hiện hành động, nó sẽ đọc qua các file này để đảm bảo tuân thủ tuyệt đối ý đồ của lập trình viên.
+Speckit yêu cầu tạo ra các file ngữ cảnh ("Bộ não dự án") trước khi code. Mỗi khi AI thực hiện hành động, nó sẽ đọc qua các file này để đảm bảo tuân thủ tuyệt đối ý đồ của lập trình viên.
 
 ---
 
 ## 2. Cấu trúc lõi của Speckit
-[cite_start]Một dự án Speckit tiêu chuẩn bao gồm 4 file ngữ cảnh quan trọng cần được tạo ra theo thứ tự[cite: 5]:
+Một dự án Speckit tiêu chuẩn bao gồm 4 file ngữ cảnh quan trọng cần được tạo ra theo thứ tự:
 
-### [cite_start]1. `constitution.md` (Hiến pháp dự án) [cite: 6]
+### 1. `constitution.md` (Hiến pháp dự án)
 * **Chức năng:** Chứa các nguyên tắc kỹ thuật "Bất khả xâm phạm" (Non-negotiable rules).
 * **Ví dụ:** Tech Stack (ESP-IDF, React, Python...), Coding Convention, các thư viện bị cấm sử dụng.
 
-### [cite_start]2. `spec.md` (Đặc tả yêu cầu) [cite: 7]
+### 2. `spec.md` (Đặc tả yêu cầu)
 * **Chức năng:** Mô tả chi tiết yêu cầu nghiệp vụ, Input/Output, User Stories.
 * **Mục tiêu:** Giúp AI hiểu "Sản phẩm này làm cái gì, hoạt động ra sao".
 
-### [cite_start]3. `plan.md` (Kế hoạch kỹ thuật) [cite: 8, 9]
+### 3. `plan.md` (Kế hoạch kỹ thuật)
 * **Chức năng:** Chuyển đổi yêu cầu thành giải pháp kỹ thuật.
 * **Nội dung:** Kiến trúc hệ thống, sơ đồ luồng dữ liệu (Data Flow), cấu trúc thư mục, định nghĩa các Module.
 
-### [cite_start]4. `tasks.md` (Danh sách nhiệm vụ) [cite: 10]
+### 4. `tasks.md` (Danh sách nhiệm vụ)
 * **Chức năng:** Chia nhỏ `plan.md` thành một Checklist công việc cụ thể (To-do list).
 * **Mục tiêu:** AI sẽ code lần lượt từng dòng trong checklist này để tránh bỏ sót hoặc gây lỗi dây chuyền.
 
