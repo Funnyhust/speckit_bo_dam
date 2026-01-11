@@ -55,11 +55,15 @@ Cài đặt/Clone repo speckit về dự án (Yêu cầu đã cài đặt `uv` h
 
 ```bash
 # Cách 1: Tạo dự án mới
-uvx --from git+https://github.com/github/spec-kit.git specify init <PROJECT_NAME>
+uvx --from git+https://github.com/github/spec-kit.git specify init <PROJECT_NAME>thê
 
 # Cách 2: Tích hợp vào thư mục hiện tại
-uvx --from git+https://github.com/github/spec-kit.git specify init --here
+sudo uvx --from git+https://github.com/github/spec-kit.git specify init --here
 ```
+
+> [!NOTE] Cấu hình cho Antigravity
+> Nếu bạn sử dụng **Antigravity** làm assistant, hãy tham khảo tài liệu [Speckit_Workflow_Setup_Guide.md](./Speckit_Workflow_Setup_Guide.md) để cấu hình các workflow cần thiết trước khi tiếp tục. Antigravity cần thiết lập thủ công các file workflow trong thư mục `.agent/workflows` để có thể nhận diện và thực thi các lệnh Speckit.
+
 
 ### Bước 2: Lựa chọn Assistant
 

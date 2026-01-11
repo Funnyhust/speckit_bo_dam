@@ -8,7 +8,9 @@
 #include "freertos/task.h"
 #include "wifi_transport.h"
 #include <stdio.h>
+#include <stdio.h>
 #include <string.h>
+#include "driver/uart.h"
 
 static const char *TAG = "MAIN";
 
@@ -80,15 +82,33 @@ static void audio_capture_task(void *pvParameters) {
 static void audio_playback_task(void *pvParameters) {
   ESP_LOGI(TAG, "Audio Playback Task started");
 
+#if TEST_MODE_STREAMING
+  // Test Mode: Read Test Packet -> UART
+  test_streaming_packet_t test_pkt;
+  const size_t item_size = sizeof(test_streaming_packet_t);
+  
+  ESP_LOGW(TAG, "TEST MODE ENABLED: Speaker DISABLED. Streaming to UART.");
+#else
+  // Normal Mode: Read Raw PCM -> Speaker
   int16_t buffer[120]; // 240 bytes
+  const size_t item_size = 240;
   size_t bytes_written = 0;
+#endif
 
   while (1) {
+#if TEST_MODE_STREAMING
+    // Read test packet (245 bytes)
+    size_t received = xStreamBufferReceive(rx_audio_buffer, &test_pkt, item_size, portMAX_DELAY);
+    if (received == item_size) {
+        // Write entire packet to UART
+        uart_write_bytes(UART_NUM_0, (const char*)&test_pkt, item_size);
+    }
+#else
     // Pop from RX buffer (blocking)
     size_t received =
-        xStreamBufferReceive(rx_audio_buffer, buffer, 240, portMAX_DELAY);
+        xStreamBufferReceive(rx_audio_buffer, buffer, item_size, portMAX_DELAY);
 
-    if (received == 240) {
+    if (received == item_size) {
       // Phase 4: Only play after receiving at least 3 packets
       if (rx_packet_count >= MIN_PACKETS_BEFORE_PLAY) {
         // Write to Speaker
@@ -99,6 +119,7 @@ static void audio_playback_task(void *pvParameters) {
         rx_packet_count++;
       }
     }
+#endif
   }
 }
 
@@ -108,6 +129,21 @@ void app_main(void) {
   // Initialize GPIO
   gpio_init();
 
+#if TEST_MODE_STREAMING
+  // Init UART High Speed
+  uart_config_t uart_config = {
+      .baud_rate = 2000000,
+      .data_bits = UART_DATA_8_BITS,
+      .parity    = UART_PARITY_DISABLE,
+      .stop_bits = UART_STOP_BITS_1,
+      .flow_ctrl = UART_HW_FLOWCTRL_DISABLE,
+      .source_clk = UART_SCLK_DEFAULT,
+  };
+  ESP_ERROR_CHECK(uart_driver_install(UART_NUM_0, 2048, 0, 0, NULL, 0));
+  ESP_ERROR_CHECK(uart_param_config(UART_NUM_0, &uart_config));
+  ESP_LOGW(TAG, "UART initialized at 2,000,000 Baud for Streaming");
+#endif
+
   // Phase 3: Create StreamBuffers
   tx_audio_buffer = xStreamBufferCreate(AUDIO_BUFFER_SIZE, 240);
   if (tx_audio_buffer == NULL) {
@@ -116,7 +152,11 @@ void app_main(void) {
   }
   ESP_LOGI(TAG, "TX audio buffer created: %d bytes", AUDIO_BUFFER_SIZE);
 
+#if TEST_MODE_STREAMING
+  rx_audio_buffer = xStreamBufferCreate(AUDIO_BUFFER_SIZE, sizeof(test_streaming_packet_t));
+#else
   rx_audio_buffer = xStreamBufferCreate(AUDIO_BUFFER_SIZE, 240);
+#endif
   if (rx_audio_buffer == NULL) {
     ESP_LOGE(TAG, "Failed to create RX audio buffer");
     return;

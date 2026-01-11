@@ -25,6 +25,25 @@
 // - Chỉ dùng Software gain nếu Hardware gain chưa đủ
 
 // ============================================================================
+// Phase 5: Testing & QA - Streaming Mode
+// ============================================================================
+// Set to 1 to enable High-Speed UART Streaming for Audio/RSSI analysis.
+// When Enabled: Speaker Output is DISABLED.
+#define TEST_MODE_STREAMING 0
+
+#if TEST_MODE_STREAMING
+// Packet structure for UART Streaming
+typedef struct __attribute__((packed)) {
+  uint16_t magic_word; // 0xA55A
+  uint16_t seq_num;    // From ESP-NOW packet
+  int8_t rssi;         // From RX Callback
+  int16_t payload[120]; // Audio Data
+} test_streaming_packet_t;
+
+#define TEST_PACKET_MAGIC 0xA55A
+#endif
+
+// ============================================================================
 // Phase 3: Audio Streaming - RingBuffer Configuration
 // ============================================================================
 // Buffer size for audio streaming (TX and RX)

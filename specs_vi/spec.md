@@ -39,6 +39,9 @@ Tính năng này triển khai hệ thống Bộ Đàm sử dụng ESP32-WROOM-32
 - **FR.TX.05:** Hệ thống **PHẢI** đóng gói dữ liệu âm thanh thành các khối nhỏ hơn 250 byte (giới hạn payload ESP-NOW).
 - **FR.TX.06:** Hệ thống **PHẢI** broadcast các gói qua ESP-NOW đến peer cụ thể (hoặc địa chỉ broadcast).
 - **FR.TX.07:** Khi thả PTT, hệ thống **PHẢI** ngay lập tức dừng truyền, bật tiếng Loa, và quay về chế độ RX.
+- **FR.TX.08:** **Khóa Liên Động (Half-Duplex Enforcement):** Hệ thống **PHẢI** chặn kích hoạt chế độ TX nếu đang nhận luồng âm thanh hợp lệ (trạng thái RX Active/Busy).
+  - Trạng thái "RX Busy" được xác định là từ lúc nhận gói tin đầu tiên cho đến **200ms** sau khi nhận gói tin cuối điều hợp lệ.
+  - Nếu người dùng nhấn PTT trong trạng thái này, hành động bị bỏ qua và kích hoạt tín hiệu LED báo bận.
 
 ## 3. Yêu Cầu Phi Chức Năng
 - **NFR.LATENCY:** Độ trễ âm thanh đầu cuối **PHẢI** nhỏ hơn 100ms.
@@ -62,6 +65,14 @@ Tính năng này triển khai hệ thống Bộ Đàm sử dụng ESP32-WROOM-32
 2. Thiết bị nhận luồng từ Người dùng A.
 3. Âm thanh phát mượt mà không bị giật.
 
+### 4.3 Kịch Bản Chặn Truyền (Kênh Bận)
+1. Người dùng A đang truyền giọng nói (TX).
+2. Thiết bị của Người dùng B đang nhận và phát âm thanh (RX Busy).
+3. Người dùng B nhấn nút PTT để cố gắng truyền.
+4. Thiết bị của B **KHÔNG** chuyển sang chế độ TX; vẫn tiếp tục duy trì chế độ RX và phát âm thanh từ A.
+5. LED trạng thái của B **PHẢI** nháy nhanh (10Hz) để báo hiệu thao tác bị từ chối trong khi nút PTT được giữ.
+6. Người dùng A tiếp tục nói mà không bị ngắt quãng.
+
 ## 5. Tiêu Chí Thành Công
 - **SC.01:** Âm thanh có thể được truyền và nhận giữa hai thiết bị với độ trễ < 100ms.
 - **SC.02:** Giọng nói rõ ràng và có thể nhận diện.
@@ -78,3 +89,10 @@ Tính năng này triển khai hệ thống Bộ Đàm sử dụng ESP32-WROOM-32
 - Khi không nhấn nút PTT, RX StreamBuffer phải rỗng.
 - Khi thiết bị A nhấn PTT, thiết bị B chỉ bắt đầu phát sau khi RX buffer đã nhận đủ 3 packet (≈ 720 B).
 - Tăng số DMA buffer cho speaker lên 8.
+
+## 8. Clarifications (Làm Rõ)
+
+### Session 2026-01-09
+- **Q:** Phản hồi LED khi PTT bị chặn? → **A:** Nháy nhanh (10Hz).
+- **Q:** Timeout trạng thái nhận (RX Busy)? → **A:** 200ms sau gói tin cuối cùng.
+

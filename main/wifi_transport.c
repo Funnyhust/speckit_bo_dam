@@ -46,7 +46,20 @@ static void esp_now_recv_cb(const esp_now_recv_info_t *recv_info,
 
   // Phase 3: Push audio payload to RX buffer for playback
   if (rx_audio_buffer != NULL) {
+#if TEST_MODE_STREAMING
+    // In Test Mode: Pack RSSI + SeqNum + Data and push to buffer
+    test_streaming_packet_t test_pkt;
+    test_pkt.magic_word = TEST_PACKET_MAGIC;
+    test_pkt.seq_num = packet->seq_num;
+    test_pkt.rssi = recv_info->rx_ctrl->rssi;
+    memcpy(test_pkt.payload, packet->payload, sizeof(packet->payload));
+    
+    // Push test packet (245 bytes)
+    xStreamBufferSend(rx_audio_buffer, &test_pkt, sizeof(test_streaming_packet_t), 0);
+#else
+    // Normal Mode: Push only audio data (240 bytes)
     xStreamBufferSend(rx_audio_buffer, packet->payload, 240, 0);
+#endif
   }
 }
 

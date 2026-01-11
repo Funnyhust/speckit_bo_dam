@@ -35,5 +35,12 @@
 - [x] **T022**: Update configuration constants in `app_config.h` for new DMA count.
 - [ ] **T023**: Add documentation updates in `README.md` và `spec.md` cho PTT flow và buffer logic.
 
+## 🧪 Giai Đoạn 5: Kiểm Thử & Đánh Giá (QA Integration)
+
+- [ ] **T024**: Định nghĩa `TEST_MODE_STREAMING` trong `main/app_config.h`. Khi bật, **TẮT output Loa** để đảm bảo chất lượng thu và kích hoạt stream UART tốc độ cao trong `main/main.c`.
+- [ ] **T025**: Tối ưu driver UART (Baud > 921600, Tx Buffer lớn) để stream PCM/RSSI không bị drop trong `main/main.c`
+- [ ] **T026**: Viết tool `tools/serial_recorder.py` để detect port, parse header, lưu file .wav và log RSSI
+- [ ] **T027**: Thực hiện đo SNR và Range Test, tổng hợp kết quả vào `docs/test_report.md`
+
 ---
 *Tất cả các nhiệm vụ đều là nguyên tử, có thể được triển khai độc lập, và tuân theo các tiêu chuẩn mã hóa của dự án.*

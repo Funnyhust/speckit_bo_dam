@@ -35,5 +35,12 @@
 - [x] **T022**: Update configuration constants in `app_config.h` for new DMA count.
 - [ ] **T023**: Add documentation updates in `README.md` và `spec.md` cho PTT flow và buffer logic.
 
+## 🧪 Phase 5: Testing & QA (Quality Assurance)
+
+- [ ] **T024**: Define `TEST_MODE_STREAMING` in `main/app_config.h`. When enabled, **DISABLE Speaker output** and activate high-speed UART streaming in `main/main.c`.
+- [ ] **T025**: Optimize UART driver (High Baudrate, Large Tx Buffer) for zero-drop streaming in `main/main.c`
+- [ ] **T026**: Develop `tools/serial_recorder.py` to auto-detect port, parse header, save .wav, and log RSSI
+- [ ] **T027**: Conduct SNR & Range Tests, document results in `docs/test_report.md`
+
 ---
 *All tasks are atomic, can be implemented independently, and follow the project's coding standards.*

@@ -89,6 +89,23 @@ Target Payload Size: 240 bytes audio + header.
     - Triển khai logic Mute.
     - Tích hợp LED Status.
 
+### Giai Đoạn 5: Kiểm Thử & Đánh Giá Chất Lượng (Quality Assurance)
+- **Mục Tiêu:** Đánh giá chất lượng Audio (SNR) và độ ổn định tín hiệu RF (RSSI).
+- **Phương Án Đã Chọn:** **[SELECTED] Phương Án A: High-Speed UART Streaming**
+    - **Lý do:** Cho phép thu âm dài, giám sát thời gian thực, và không cần thêm phần cứng (SD Card) hay giới hạn bộ nhớ (RAM).
+    - **Cơ chế:**
+        - Firmware: Stream dữ liệu PCM (16-bit, 16kHz) + RSSI qua UART0/UART1 với Baudrate cao ( ví dụ: 2,000,000 baud).
+        - **Lưu ý:** Disable Speaker Output khi kích hoạt mode này để đảm bảo chất lượng thu.
+        - Tooling: Python script trên PC đọc Serial port, tách header/data, lưu file `.wav` và log CSV cho RSSI.
+- **Nhiệm Vụ Cụ Thể:**
+    - [ ] `firmware`: Thêm lệnh shell hoặc nút boot để kích hoạt `TEST_MODE_STREAMING`.
+    - [ ] `firmware`: Tối ưu ghi UART (sử dụng UART FIFO và tx_buffer lớn) để tránh drop byte.
+    - [ ] `tool`: Viết script `tools/serial_recorder.py`:
+        - Tự động detect cổng buffer.
+        - Parse packet stream.
+        - Hiển thị RSSI realtime (chart console hoặc GUI).
+        - Save file `test_capture_{timestamp}.wav`.
+
 ## 4. Cấu Trúc File
 ```text
 .

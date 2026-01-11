@@ -89,6 +89,23 @@ Target Payload Size: 240 bytes audio + header.
     - Mute logic implementation.
     - LED Status integration.
 
+### Phase 5: Testing & Quality Assurance
+- **Goal:** Evaluate Audio Quality (SNR) and RF signal stability (RSSI).
+- **Selected Method:** **[SELECTED] Method A: High-Speed UART Streaming**
+    - **Reasoning:** Allows long recording times, real-time monitoring, and requires no extra hardware (SD Card) or memory constraints (RAM).
+    - **Mechanism:**
+        - Firmware: Stream PCM data (16-bit, 16kHz) + RSSI via UART0/UART1 at high Baudrate (e.g., 2,000,000 baud).
+        - **Note:** Disable Speaker Output when this mode is active to ensure recording quality.
+        - Tooling: Python script on PC reads Serial port, separates header/data, saves `.wav` file, and logs RSSI to CSV.
+- **Specific Tasks:**
+    - [ ] `firmware`: Add shell command or boot button to activate `TEST_MODE_STREAMING`.
+    - [ ] `firmware`: Optimize UART writing (use UART FIFO and large tx_buffer) to prevent byte drops.
+    - [ ] `tool`: Write script `tools/serial_recorder.py`:
+        - Automatic buffer detection.
+        - Parse packet stream.
+        - Display real-time RSSI (console chart or GUI).
+        - Save file `test_capture_{timestamp}.wav`.
+
 ## 4. File Structure
 ```text
 .
